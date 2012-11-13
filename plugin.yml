@@ -2,4 +2,4 @@ name: IPPerm
 author: tsuttsu305
 main: jp.tsuttsu305.IPPerm
 version: 1.00
-
+depend: [PermissionsEx]

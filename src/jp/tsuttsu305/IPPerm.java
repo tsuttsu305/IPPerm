@@ -1,5 +1,7 @@
 package jp.tsuttsu305;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.bukkit.entity.Player;
@@ -14,6 +16,7 @@ public class IPPerm extends JavaPlugin {
 	{
 		PluginDescriptionFile pdfFile = getDescription();
 		this.logger.info(pdfFile.getName() + "version" + pdfFile.getVersion() + " is Enabled");
+
 		//イベント登録
 		getServer().getPluginManager().registerEvents(new PlayerJoin(this), this);
 
@@ -31,20 +34,31 @@ public class IPPerm extends JavaPlugin {
 		this.logger.info(pdfFile.getName() + "version" + pdfFile.getVersion() + " is Disabled");
 	}
 
-	public String getConfIP(Player p){
+	public List<String>  getConfIP(Player p){
 		String playerName = p.getName();
-		String ip = "127.0.0.1";
+		List<String> ip = new ArrayList<String>();
+		
+
 
 		if (getConfig().isString(playerName)){		//Playerの名前のconfigがあった場合
-			ip = getConfig().getString(playerName);
+			//debug code
+			getServer().broadcastMessage("Player ID Found");
+
+			ip = getConfig().getStringList(playerName);
 
 		}else{	//なかったら作成
+			//debug code
+			getServer().broadcastMessage("Player ID not Found");
+			
+			ip.add("0.0.0.0");
 			getConfig().createSection(playerName);
-			getConfig().set(playerName, "0.0.0.0");
+			getConfig().set(playerName, ip);
+			
+			saveConfig();
 		}
 
 		return ip;
 	}
-	
+
 
 }
