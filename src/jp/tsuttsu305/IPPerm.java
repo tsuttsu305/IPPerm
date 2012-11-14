@@ -15,29 +15,28 @@ public class IPPerm extends JavaPlugin {
 	public void onEnable()
 	{
 		PluginDescriptionFile pdfFile = getDescription();
-		this.logger.info(pdfFile.getName() + "version" + pdfFile.getVersion() + " is Enabled");
+		this.logger.info("[IPPerm] IPPerm " + "Version " + pdfFile.getVersion() + " is Enabled");
 
 		//イベント登録
 		getServer().getPluginManager().registerEvents(new PlayerJoin(this), this);
 
 		getConfig().options().copyDefaults(true);
 		saveConfig();
-
-
-
-
 	}
+
+
+
 
 	public void onDisable()
 	{
 		PluginDescriptionFile pdfFile = getDescription();
-		this.logger.info(pdfFile.getName() + "version" + pdfFile.getVersion() + " is Disabled");
+		this.logger.info("[IPPerm] IPPerm " + "Version " + pdfFile.getVersion() + " is Disabled");
 	}
-
+	
 	public List<String>  getConfIP(Player p){
 		String playerName = p.getName();
 		List<String> ip = new ArrayList<String>();
-		
+
 
 
 		if (getConfig().isList(playerName)){		//Playerの名前のconfigがあった場合
@@ -45,25 +44,25 @@ public class IPPerm extends JavaPlugin {
 			//getServer().broadcastMessage("Player ID Found");
 
 			ip = getConfig().getStringList(playerName);
-			
+
 
 		}else{	//なかったら作成
 			//debug code
 			//getServer().broadcastMessage("Player ID not Found");
-			
+
 			ip.add("0.0.0.0");
 			getConfig().createSection(playerName);
 			getConfig().set(playerName, ip);
-			
+
 		}
 		saveConfig();
 		return ip;
 	}
-	
+
 	public List<String> getAdminList(){
-		
+
 		return getConfig().getStringList("adminList");
-		
+
 	}
 
 
