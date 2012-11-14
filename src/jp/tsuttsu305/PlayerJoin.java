@@ -22,61 +22,71 @@ public class PlayerJoin implements Listener {
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event){
 		//debug code
-		ipPerm.getServer().broadcastMessage("Join");
+		//ipPerm.getServer().broadcastMessage("Join");
 
 		Player joinPlayer = event.getPlayer();
-		PermissionUser user = PermissionsEx.getUser(joinPlayer);
-		String playerIP = joinPlayer.getAddress().getHostName(); //JoinしたPlayerのIPアドレス取得
-		String groupAdmin = ipPerm.getConfig().getString("adminGroup");	//Configからグループ取得 Admin
-		String groupMember = ipPerm.getConfig().getString("memberGroup"); //Member
-
-		List<String> confIP = ipPerm.getConfIP(joinPlayer); //Configのデータ取得
-		//String[] ipList = ipPerm.getConfIP(joinPlayer);
-
-
-		//debug code
-		ipPerm.getServer().broadcastMessage("JoinIP: " + playerIP);
-
-		String[] playerIPSp = playerIP.split("\\."); //PlayerのIPアドレスをオクテッ(ry
-		boolean perm = false;
-
-		for (String s:confIP){
+		List<String> adminPlayers = ipPerm.getAdminList();
+		boolean adminTF = false;
+		for (String s:adminPlayers){
 			//debug code
-			ipPerm.getServer().broadcastMessage(s);
+			//ipPerm.getServer().broadcastMessage(s + "J: " + joinPlayer.getName());
 			
-			String[] confIPSp = s.split("\\."); //コンフィグのIPアドレスをオクテット単位でどーん
-
-			//判定
-			if(Integer.parseInt(confIPSp[0])== Integer.parseInt(playerIPSp[0])){
-				if(Integer.parseInt(confIPSp[1])== Integer.parseInt(playerIPSp[1])){
-					if(Integer.parseInt(confIPSp[2])== Integer.parseInt(playerIPSp[2])){
-						if(Integer.parseInt(confIPSp[3])== Integer.parseInt(playerIPSp[3])){
-							//debug code
-							ipPerm.getServer().broadcastMessage("IP True");
-
-							perm = true;
-							break;
-						}
-					}
-				}
+			if (s.equals(joinPlayer.getName())){
+				adminTF = true;
+				break;
 			}
+
+		}
+		if (adminTF == true){
+			//debug code
+			//ipPerm.getServer().broadcastMessage("Adminlist Found");
 			
+			PermissionUser user = PermissionsEx.getUser(joinPlayer);
+			String playerIP = joinPlayer.getAddress().getHostName(); //JoinしたPlayerのIPアドレス取得
+			String groupAdmin = ipPerm.getConfig().getString("adminGroup");	//Configからグループ取得 Admin
+			String groupMember = ipPerm.getConfig().getString("memberGroup"); //Member
 
-		}
-		//IPが一致した場合はAdmin権限を付与。一致がない場合はMember権限を付与
-		if (perm == true){
+			List<String> confIP = ipPerm.getConfIP(joinPlayer); //Configのデータ取得
+
+
 			//debug code
-			ipPerm.getServer().broadcastMessage("Admin");
+			//ipPerm.getServer().broadcastMessage("JoinIP: " + playerIP);
 
-			String[] groups = {groupAdmin};
-			user.setGroups(groups);
-		}else{
-			//debug code
-			ipPerm.getServer().broadcastMessage("Member");
+			boolean perm = false;
 
-			String[] groups = {groupMember};
-			user.setGroups(groups);
+			for (String s:confIP){
+				//debug code
+				//ipPerm.getServer().broadcastMessage(s);
+
+				//判定
+				if (s.equals(playerIP)){
+					//debug code
+					//ipPerm.getServer().broadcastMessage("IP True");
+
+					perm = true;
+					break;
+				}
+
+
+			}
+			//IPが一致した場合はAdmin権限を付与。一致がない場合はMember権限を付与
+			if (perm == true){
+				//debug code
+				//ipPerm.getServer().broadcastMessage("Admin");
+				ipPerm.logger.info("[IPPerm] " + joinPlayer.getName() + " is " + groupAdmin + " Group Now!");
+
+				String[] groups = {groupAdmin};
+				user.setGroups(groups);
+			}else{
+				//debug code
+				//ipPerm.getServer().broadcastMessage("Member");
+				ipPerm.logger.info("[IPPerm] " + joinPlayer.getName() + " is " + groupMember + " Group Now!");
+
+				String[] groups = {groupMember};
+				user.setGroups(groups);
+			}
 		}
+
 
 		return;
 	}

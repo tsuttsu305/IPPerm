@@ -42,14 +42,14 @@ public class IPPerm extends JavaPlugin {
 
 		if (getConfig().isList(playerName)){		//Playerの名前のconfigがあった場合
 			//debug code
-			getServer().broadcastMessage("Player ID Found");
+			//getServer().broadcastMessage("Player ID Found");
 
 			ip = getConfig().getStringList(playerName);
 			
 
 		}else{	//なかったら作成
 			//debug code
-			getServer().broadcastMessage("Player ID not Found");
+			//getServer().broadcastMessage("Player ID not Found");
 			
 			ip.add("0.0.0.0");
 			getConfig().createSection(playerName);
@@ -58,6 +58,12 @@ public class IPPerm extends JavaPlugin {
 		}
 		saveConfig();
 		return ip;
+	}
+	
+	public List<String> getAdminList(){
+		
+		return getConfig().getStringList("adminList");
+		
 	}
 
 

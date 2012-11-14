@@ -1,2 +1,4 @@
 adminGroup: 'Admin'
 memberGroup: 'Member'
+adminList:
+- 'Player'
