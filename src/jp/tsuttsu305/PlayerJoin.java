@@ -49,34 +49,23 @@ public class PlayerJoin implements Listener {
 					if(Integer.parseInt(confIPSp[2])== Integer.parseInt(playerIPSp[2])){
 						if(Integer.parseInt(confIPSp[3])== Integer.parseInt(playerIPSp[3])){
 							perm = true;
+							break;
 						}
 					}
 				}
 			}
-			
- 			
-			
-		}
-		
-
-		
-		/*if(playerIP == confIP){		//一致した場合
-			//debug code
-			ipPerm.getServer().broadcastMessage("Admin");
-
-			String[] groups = {groupAdmin};
-			user.setGroups(groups);
-
+			//IPが一致した場合はAdmin権限を付与。一致がない場合はMember権限を付与
+			if (perm == true){
+				String[] groups = {groupAdmin};
+				user.setGroups(groups);
 			}else{
-				//debug code
-				ipPerm.getServer().broadcastMessage("Member");
-				
 				String[] groups = {groupMember};
 				user.setGroups(groups);
-			}*/
-
-
-
+			}
+				
+			
+			
+		}
 
 		return;
 	}
