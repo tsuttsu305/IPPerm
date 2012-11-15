@@ -32,7 +32,7 @@ public class IPPerm extends JavaPlugin {
 		PluginDescriptionFile pdfFile = getDescription();
 		this.logger.info("[IPPerm] IPPerm " + "Version " + pdfFile.getVersion() + " is Disabled");
 	}
-	
+
 	public List<String>  getConfIP(Player p){
 		String playerName = p.getName();
 		List<String> ip = new ArrayList<String>();

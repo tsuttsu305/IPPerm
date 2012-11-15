@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -19,7 +20,7 @@ public class PlayerJoin implements Listener {
 		this.ipPerm =ipPerm;
 
 	}
-	@EventHandler
+	@EventHandler(priority=EventPriority.HIGH)
 	public void onPlayerJoin(PlayerJoinEvent event){
 		//debug code
 		//ipPerm.getServer().broadcastMessage("Join");
@@ -30,7 +31,7 @@ public class PlayerJoin implements Listener {
 		for (String s:adminPlayers){
 			//debug code
 			//ipPerm.getServer().broadcastMessage(s + "J: " + joinPlayer.getName());
-			
+
 			if (s.equals(joinPlayer.getName())){
 				adminTF = true;
 				break;
@@ -40,7 +41,7 @@ public class PlayerJoin implements Listener {
 		if (adminTF == true){
 			//debug code
 			//ipPerm.getServer().broadcastMessage("Adminlist Found");
-			
+
 			PermissionUser user = PermissionsEx.getUser(joinPlayer);
 			String playerIP = joinPlayer.getAddress().getHostName(); //JoinしたPlayerのIPアドレス取得
 			String groupAdmin = ipPerm.getConfig().getString("adminGroup");	//Configからグループ取得 Admin
