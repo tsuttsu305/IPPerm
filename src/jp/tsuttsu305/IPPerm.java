@@ -51,6 +51,7 @@ public class IPPerm extends JavaPlugin {
 			//getServer().broadcastMessage("Player ID not Found");
 
 			ip.add("0.0.0.0");
+			ip.add("example.com");
 			getConfig().createSection(playerName);
 			getConfig().set(playerName, ip);
 

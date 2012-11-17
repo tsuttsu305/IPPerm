@@ -1,5 +1,7 @@
 package jp.tsuttsu305;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import org.bukkit.entity.Player;
@@ -21,7 +23,7 @@ public class PlayerJoin implements Listener {
 		this.ipPerm =ipPerm;
 
 	}
-	
+
 	@EventHandler(priority=EventPriority.HIGH)
 	public void onPlayerJoin(PlayerJoinEvent event){
 		//debug code
@@ -29,12 +31,12 @@ public class PlayerJoin implements Listener {
 
 		Player joinPlayer = event.getPlayer();
 		List<String> adminPlayers = ipPerm.getAdminList();
-		
+
 		boolean adminTF = false;
 		for (String s:adminPlayers){
 			//debug code
 			//ipPerm.getServer().broadcastMessage(s + "J: " + joinPlayer.getName());
-			
+
 			if (s.equals(joinPlayer.getName())){
 				adminTF = true;
 				break;
@@ -56,6 +58,19 @@ public class PlayerJoin implements Listener {
 			boolean admin = false;
 
 			for (String s:confIP){
+				String ads = s;
+					try {
+						InetAddress ad;
+						ad = InetAddress.getByName(ads);
+						ads = ad.getHostAddress();
+						ipPerm.getServer().broadcastMessage(s + ": "  + ads);
+					} catch (UnknownHostException e) {
+						// TODO 自動生成された catch ブロック
+						ads = s;
+					}
+					
+					s = ads;
+
 				boolean[] perm = {false, false, false, false};
 				//debug code
 				//ipPerm.getServer().broadcastMessage(s);
