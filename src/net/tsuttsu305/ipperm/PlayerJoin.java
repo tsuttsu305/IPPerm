@@ -1,4 +1,4 @@
-package jp.tsuttsu305;
+package net.tsuttsu305.ipperm;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

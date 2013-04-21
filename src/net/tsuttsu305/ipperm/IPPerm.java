@@ -1,4 +1,4 @@
-package jp.tsuttsu305;
+package net.tsuttsu305.ipperm;
 
 import java.util.ArrayList;
 import java.util.List;
